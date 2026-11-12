@@ -1,6 +1,6 @@
 
 import { OpenFeature } from "@openfeature/web-sdk";
-import type { Provider, Client } from "@openfeature/core";
+import type { Provider, Client } from "@openfeature/web-sdk";
 
 export interface FeatureFlagOptions {
   provider: Provider;
@@ -14,15 +14,14 @@ const initializationPromises = new Map<string, Promise<void>>();
 export async function initializeFeatureFlags(
   options: FeatureFlagOptions
 ): Promise<Client> {
-  
   const domain = options.domain ?? DEFAULT_DOMAIN;
 
   let initialization = initializationPromises.get(domain);
 
   if (!initialization) {
     initialization = OpenFeature.setProviderAndWait(
-      options.provider,
-      domain
+      domain,
+      options.provider
     );
 
     initializationPromises.set(domain, initialization);
