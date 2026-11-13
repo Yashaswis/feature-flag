@@ -11,10 +11,6 @@ export {
     useFeatureFlag,
   } from "./hooks/useFeatureFlag";
   
-  export {
-    useFeatureFlagDetails,
-  } from "./hooks/useFeatureFlagDetails";
-  
   export type {
     FeatureFlagOptions,
   } from "./core/initialize";
@@ -23,5 +19,3 @@ export {
     FeatureFlagConfig,
     FeatureFlagDetails,
   } from "./types";
-
-  export { useFeatureFlags } from "./hooks/useFeatureFlags";

@@ -1,6 +1,5 @@
 
-import { OpenFeatureProvider } from "@openfeature/react-sdk";
-import { OpenFeature } from "@openfeature/web-sdk";
+import { OpenFeatureProvider, OpenFeature } from "@openfeature/react-sdk";
 import type { ReactNode } from "react";
 
 interface FeatureFlagProviderProps {

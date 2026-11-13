@@ -1,6 +1,12 @@
 
-import { OpenFeature } from "@openfeature/web-sdk";
-import type { Provider, Client } from "@openfeature/web-sdk";
+import {
+  OpenFeature,
+} from "@openfeature/react-sdk";
+
+import type {
+  Provider,
+  Client,
+} from "@openfeature/react-sdk";
 
 export interface FeatureFlagOptions {
   provider: Provider;

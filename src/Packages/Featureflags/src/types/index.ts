@@ -1,5 +1,5 @@
 
-import type { Provider } from "@openfeature/web-sdk";
+import type { Provider } from "@openfeature/react-sdk";
 
 export interface FeatureFlagConfig {
   provider: Provider;
