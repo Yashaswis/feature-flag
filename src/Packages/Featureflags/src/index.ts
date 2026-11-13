@@ -23,3 +23,5 @@ export {
     FeatureFlagConfig,
     FeatureFlagDetails,
   } from "./types";
+
+  export { useFeatureFlags } from "./hooks/useFeatureFlags";

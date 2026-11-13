@@ -13,10 +13,17 @@ import "./index.css";
 const localProvider = new TypedInMemoryProvider({
   "new-dashboard": {
     disabled: false,
-    variants: {
-      on: false,
-      off: true,
-    },
+    variants: { on: true, off: false },
+    defaultVariant: "on",
+  },
+  "enable-payment": {
+    disabled: false,
+    variants: { on: true, off: false },
+    defaultVariant: "off",
+  },
+  "show-reports": {
+    disabled: false,
+    variants: { on: true, off: false },
     defaultVariant: "on",
   },
 });

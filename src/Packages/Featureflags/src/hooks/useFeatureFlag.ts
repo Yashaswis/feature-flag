@@ -1,16 +1,14 @@
+import { useFlag } from "@openfeature/react-sdk";
+import type {
+  FlagValue,
+  ConstrainedFlagKey,
+} from "@openfeature/web-sdk";
 
-import {
-    useBooleanFlagValue
-  } from "@openfeature/react-sdk";
-  
-  export function useFeatureFlag(
-    flagKey: string,
-    defaultValue: boolean = false
-  ): boolean {
-  
-    return useBooleanFlagValue(
-      flagKey,
-      defaultValue
-    );
-  }
-  
+export function useFeatureFlag<T extends FlagValue>(
+  flagKey: ConstrainedFlagKey<T>,
+  defaultValue: T
+): T {
+  const { value } = useFlag<T>(flagKey, defaultValue);
+
+  return value as T;
+}

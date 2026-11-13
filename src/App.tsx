@@ -1,40 +1,34 @@
-
-import {
-  useFeatureFlag,
-  useFeatureFlagDetails,
-} from "@company/feature-flags";
+import { useFeatureFlag } from "@company/feature-flags";
 
 function App() {
-  const isNewDashboardEnabled = useFeatureFlag(
-    "new-dashboard",
-    false
-  );
+  const isEnabled = useFeatureFlag("new-dashboard", false);
 
-  const flagDetails = useFeatureFlagDetails(
-    "new-dashboard",
-    false
-  );
+  const buttonColor = useFeatureFlag("button-color", "blue");
+
+  const pageSize = useFeatureFlag("page-size", 20);
+
+  const dashboardConfig = useFeatureFlag("dashboard-config", {
+    theme: "dark",
+    showReports: true,
+    permissions: {
+      canEdit: true,
+      canDelete: false,
+    },
+  });
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>Feature Flag SDK Demo</h1>
+    <div>
+      <h2>Boolean Flag</h2>
+      <p>{String(isEnabled)}</p>
 
-      <h2>New Dashboard</h2>
+      <h2>String Flag</h2>
+      <p>{buttonColor}</p>
 
-      {isNewDashboardEnabled ? (
-        <h3>New Dashboard is ENABLED</h3>
-      ) : (
-        <h3>New Dashboard is DISABLED</h3>
-      )}
+      <h2>Number Flag</h2>
+      <p>{pageSize}</p>
 
-      <hr />
-
-      <h3>Feature Flag Details</h3>
-
-      <p>Flag Key: {flagDetails.flagKey}</p>
-      <p>Value: {String(flagDetails.value)}</p>
-      <p>Variant: {flagDetails.variant ?? "N/A"}</p>
-      <p>Reason: {flagDetails.reason ?? "N/A"}</p>
+      <h2>JSON Flag</h2>
+      <pre>{JSON.stringify(dashboardConfig, null, 2)}</pre>
     </div>
   );
 }
