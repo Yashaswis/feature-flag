@@ -1,6 +1,11 @@
+import {
+  OpenFeature,
+  OpenFeatureProvider,
+} from "@openfeature/react-sdk";
 
-import { OpenFeatureProvider, OpenFeature } from "@openfeature/react-sdk";
 import type { ReactNode } from "react";
+
+import { DEFAULT_DOMAIN } from "../core/initialize";
 
 interface FeatureFlagProviderProps {
   children: ReactNode;
@@ -9,7 +14,7 @@ interface FeatureFlagProviderProps {
 
 export function FeatureFlagProvider({
   children,
-  domain = "company-feature-flags",
+  domain = DEFAULT_DOMAIN,
 }: FeatureFlagProviderProps) {
   const client = OpenFeature.getClient(domain);
 

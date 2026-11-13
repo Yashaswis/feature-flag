@@ -1,7 +1,5 @@
 export {
-    initializeFeatureFlags,
-    getFeatureFlagClient,
-  } from "./core/initialize";
+    initializeFeatureFlags  } from "./core/initialize";
   
   export {
     FeatureFlagProvider,
