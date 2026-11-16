@@ -9,8 +9,6 @@ export type FeatureFlagProps = ComponentProps<
   typeof OpenFeatureFlag
 >;
 
-// reusable wrapper
-export const FeatureFlag = (props: FeatureFlagProps) => {
+export function FeatureFlag(props: FeatureFlagProps) {
   return <OpenFeatureFlag {...props} />;
-};
-
+}

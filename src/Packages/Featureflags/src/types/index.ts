@@ -1,14 +1,8 @@
 
-import type { Provider } from "@openfeature/react-sdk";
+export type {
+  FeatureFlagOptions,
+} from "../core/initialize";
 
-export interface FeatureFlagConfig {
-  provider: Provider;
-}
-
-export interface FeatureFlagDetails {
-  flagKey: string;
-  value: boolean;
-  variant?: string;
-  reason?: string;
-  errorCode?: string;
-}
+export type {
+  FeatureFlagProps,
+} from "../components/FeatureFlag";
