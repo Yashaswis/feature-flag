@@ -1,4 +1,4 @@
-import { useFeatureFlag } from "@company/feature-flags";
+import { useFeatureFlag, FeatureFlag } from "@company/feature-flags";
 
 function App() {
   const isEnabled = useFeatureFlag("new-dashboard", false);
@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <h2>Boolean Flag</h2>
-      <p>{String(isEnabled)}</p>
+      <p>{isEnabled}? "flag is isEnabled":"Flag is disabled"</p>
 
       <h2>String Flag</h2>
       <p>{buttonColor}</p>
@@ -29,6 +29,15 @@ function App() {
 
       <h2>JSON Flag</h2>
       <pre>{JSON.stringify(dashboardConfig, null, 2)}</pre>
+
+      <FeatureFlag
+        flagKey="show-loan-products"
+        defaultValue={false}
+        fallback={<p>Loan products unavailable</p>}
+      >
+        <p> Loan products are available</p>
+        {/* <LoanProducts /> */}
+      </FeatureFlag>
     </div>
   );
 }

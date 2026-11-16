@@ -1,4 +1,5 @@
 import { OpenFeature } from "@openfeature/react-sdk";
+
 import type {
   Provider,
   Client,

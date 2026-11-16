@@ -3,11 +3,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import {
-  OpenFeature,
   TypedInMemoryProvider,
 } from "@openfeature/react-sdk";
 
-import { FeatureFlagProvider } from
+import { FeatureFlagProvider, initializeFeatureFlags } from
   "@company/feature-flags";
 
 import App from "./App";
@@ -22,10 +21,20 @@ const localProvider = new TypedInMemoryProvider({
     },
     defaultVariant: "on",
   },
+  "show-loan-products":{
+    disabled: false,
+    variants: {
+      on: false,
+      off: true,
+    },
+    defaultVariant: "on",
+  }
 });
 
 async function bootstrap() {
-  await OpenFeature.setProviderAndWait(localProvider);
+  await initializeFeatureFlags({
+    provider: localProvider,
+  });
 
   createRoot(document.getElementById("root")!).render(
     <StrictMode>

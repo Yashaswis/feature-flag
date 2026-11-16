@@ -1,19 +1,22 @@
 export {
-    initializeFeatureFlags  } from "./core/initialize";
-  
-  export {
-    FeatureFlagProvider,
-  } from "./components/FeatureFlagProvider";
-  
-  export {
-    useFeatureFlag,
-  } from "./hooks/useFeatureFlag";
-  
-  export type {
-    FeatureFlagOptions,
-  } from "./core/initialize";
-  
-  export type {
-    FeatureFlagConfig,
-    FeatureFlagDetails,
-  } from "./types";
+  initializeFeatureFlags,
+  DEFAULT_DOMAIN,
+} from "./core/initialize";
+
+export type {
+  FeatureFlagOptions,
+} from "./core/initialize";
+
+export {
+  FeatureFlagProvider,
+} from "./components/FeatureFlagProvider";
+
+export {
+  useFeatureFlag,
+} from "./hooks/useFeatureFlag";
+
+export { FeatureFlag } from "./components/FeatureFlag";
+
+export type {
+  FeatureFlagProps,
+} from "./components/FeatureFlag";

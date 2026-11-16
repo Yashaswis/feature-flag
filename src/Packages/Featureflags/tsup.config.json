@@ -12,7 +12,6 @@ export default defineConfig({
     "react",
     "react-dom",
     "@openfeature/core",
-    "@openfeature/web-sdk",
     "@openfeature/react-sdk"
   ]
 });

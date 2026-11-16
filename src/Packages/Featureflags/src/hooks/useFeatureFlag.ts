@@ -1,6 +1,4 @@
-import {
-  useFlag,
-} from "@openfeature/react-sdk";
+import { useFlag } from "@openfeature/react-sdk";
 
 import type {
   FlagValue,
