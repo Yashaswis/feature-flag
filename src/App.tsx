@@ -10,7 +10,6 @@ function App() {
     loading: allFlagsLoading,
     error: allFlagsError,
   } = useFeatureFlagApi({
-    endpoint: "YOUR_BACKEND_BASE_URL",
     apiKey: "YOUR_API_KEY",
     environment: "dev",
     subjectId: "user-123",
@@ -22,7 +21,6 @@ function App() {
     loading: dashboardLoading,
     error: dashboardError,
   } = useFeatureFlagApi({
-    endpoint: "YOUR_BACKEND_BASE_URL",
     apiKey: "YOUR_API_KEY",
     environment: "dev",
     subjectId: "user-123",
