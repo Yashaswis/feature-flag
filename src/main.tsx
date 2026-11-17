@@ -10,7 +10,7 @@ import App from "./App";
 
 async function bootstrap() {
   await initializeFeatureFlags({
-    apiKey: "YOUR_API_KEY",
+    apiKey: "dev-api-key",
     environment: "dev",
     subjectId: "user-123",
   });

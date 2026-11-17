@@ -10,7 +10,7 @@ function App() {
     loading: allFlagsLoading,
     error: allFlagsError,
   } = useFeatureFlagApi({
-    apiKey: "YOUR_API_KEY",
+    apiKey: "dev-api-key",
     environment: "dev",
     subjectId: "user-123",
   });
@@ -21,7 +21,7 @@ function App() {
     loading: dashboardLoading,
     error: dashboardError,
   } = useFeatureFlagApi({
-    apiKey: "YOUR_API_KEY",
+    apiKey: "dev-api-key",
     environment: "dev",
     subjectId: "user-123",
     flagKey: "new-dashboard",
