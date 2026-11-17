@@ -1,8 +1,7 @@
-
 import {
   FeatureFlag,
   useFeatureFlagApi,
-} from "@your-org/openfeatures";
+} from "@lendistry/openfeature";
 
 function App() {
   // Evaluate all flags

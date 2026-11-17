@@ -1,10 +1,11 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
+
 import {
   initializeFeatureFlags,
   FeatureFlagProvider,
-} from "@your-org/openfeatures";
+} from "@lendistry/openfeature";
 import App from "./App";
 
 async function bootstrap() {
