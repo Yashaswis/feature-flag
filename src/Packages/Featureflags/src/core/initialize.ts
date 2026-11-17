@@ -9,7 +9,7 @@ import { mockFlags } from "../mock/mockFlags";
 
 export const DEFAULT_DOMAIN = "company-feature-flags";
 
-const BASE_URL = "YOUR_EXISTING_BACKEND_BASE_URL";
+const BASE_URL = "http://localhost:9099";
 
 export interface FeatureFlagOptions {
   apiKey: string;
@@ -30,21 +30,12 @@ type FlagConfig = Record<
   }
 >;
 
-const USE_MOCK_API = true;
-
 export async function initializeFeatureFlags(
   options: FeatureFlagOptions
 ) {
   let values: Record<string, JsonValue>;
-
-  // Get values from mock or backend.
-  if (USE_MOCK_API) {
-    console.log("Using mock feature flag response");
-
-    values = mockFlags.values as Record<string, JsonValue>;
-  } else {
     const response = await fetch(
-      `${BASE_URL.replace(/\/$/, "")}/v1/flags/evaluate-all`,
+      'http://localhost:9099/v1/flags/evaluate-all',
       {
         method: "POST",
         headers: {
@@ -68,7 +59,6 @@ export async function initializeFeatureFlags(
     const result: EvaluateAllResponse = await response.json();
 
     values = result.values;
-  }
 
   // Convert values into provider configuration.
   const flagConfiguration: FlagConfig = Object.fromEntries(

@@ -5,7 +5,6 @@ import { mockFlags } from "../mock/mockFlags";
 const USE_MOCK_API = true;
 
 interface FeatureFlagApiOptions {
-  endpoint: string;
   apiKey: string;
   environment: string;
   subjectId: string;
@@ -19,7 +18,6 @@ interface FeatureFlagApiResult<T> {
 }
 
 export function useFeatureFlagApi<T = unknown>({
-  endpoint,
   apiKey,
   environment,
   subjectId,
@@ -36,30 +34,11 @@ export function useFeatureFlagApi<T = unknown>({
         setError(null);
 
         let response: T;
-
-        if (USE_MOCK_API) {
-          // Mock API response
-          await new Promise((resolve) => setTimeout(resolve, 500));
-
-          if (flagKey) {
-            const value =
-              mockFlags.values[
-                flagKey as keyof typeof mockFlags.values
-              ];
-
-            if (value === undefined) {
-              throw new Error(`Flag '${flagKey}' not found`);
-            }
-
-            response = { value } as T;
-          } else {
-            response = { values: mockFlags.values } as T;
-          }
-        } else {
+        
           // Real API integration
           const url = flagKey
-            ? `${endpoint}/v1/flags/${encodeURIComponent(flagKey)}/evaluate`
-            : `${endpoint}/v1/flags/evaluate-all`;
+            ? `http://localhost:9099/v1/flags/${encodeURIComponent(flagKey)}/evaluate`
+            : `http://localhost:9099/v1/flags/evaluate-all`;
 
           const apiResponse = await fetch(url, {
             method: "POST",
@@ -81,7 +60,6 @@ export function useFeatureFlagApi<T = unknown>({
           }
 
           response = await apiResponse.json();
-        }
 
         setData(response);
       } catch (err) {
@@ -96,7 +74,7 @@ export function useFeatureFlagApi<T = unknown>({
     };
 
     evaluateFlag();
-  }, [endpoint, apiKey, environment, subjectId, flagKey]);
+  }, [apiKey, environment, subjectId, flagKey]);
 
   return { data, loading, error };
 }

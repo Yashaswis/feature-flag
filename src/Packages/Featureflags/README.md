@@ -159,7 +159,6 @@ import { useFeatureFlagApi } from "@lendistry/openfeature";
 
 function Dashboard() {
   const { data, loading, error } = useFeatureFlagApi({
-    endpoint: "YOUR_API_BASE_URL",
     apiKey: "YOUR_API_KEY",
     environment: "dev",
     subjectId: "user-123",
@@ -198,7 +197,6 @@ import { useFeatureFlagApi } from "@lendistry/openfeature";
 
 function PaymentPage() {
   const { data, loading, error } = useFeatureFlagApi({
-    endpoint: "YOUR_API_BASE_URL",
     apiKey: "YOUR_API_KEY",
     environment: "dev",
     subjectId: "user-123",
@@ -237,7 +235,6 @@ Expected response structure:
 
 | Property | Description |
 |---|---|
-| `endpoint` | Feature flag API base URL |
 | `apiKey` | API authentication key |
 | `environment` | Target environment |
 | `subjectId` | User or subject identifier |
