@@ -18,13 +18,13 @@ export interface FeatureFlagOptions {
 }
 
 interface EvaluateAllResponse {
-  values: Record<string, boolean | JsonValue>;
+  values: Record<string, JsonValue>;
 }
 
 type FlagConfig = Record<
   string,
   {
-    variants: Record<string, boolean | JsonValue>;
+    variants: Record<string, JsonValue>;
     defaultVariant: string;
     disabled: boolean;
   }
@@ -35,39 +35,44 @@ const USE_MOCK_API = true;
 export async function initializeFeatureFlags(
   options: FeatureFlagOptions
 ) {
+  let values: Record<string, JsonValue>;
 
+  // Get values from mock or backend.
   if (USE_MOCK_API) {
     console.log("Using mock feature flag response");
 
-    return mockFlags.values as Record<string, JsonValue>;
-  }
-
-  const response = await fetch(
-    `${BASE_URL}/v1/flags/evaluate-all`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": options.apiKey,
-      },
-      body: JSON.stringify({
-        subjectId: options.subjectId,
-        environment: options.environment,
-        attributes: {},
-      }),
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to load feature flags: ${response.status}`
+    values = mockFlags.values as Record<string, JsonValue>;
+  } else {
+    const response = await fetch(
+      `${BASE_URL.replace(/\/$/, "")}/v1/flags/evaluate-all`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": options.apiKey,
+        },
+        body: JSON.stringify({
+          subjectId: options.subjectId,
+          environment: options.environment,
+          attributes: {},
+        }),
+      }
     );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to load feature flags: ${response.status}`
+      );
+    }
+
+    const result: EvaluateAllResponse = await response.json();
+
+    values = result.values;
   }
 
-  const result: EvaluateAllResponse = await response.json();
-
-  const flagConfiguration = Object.fromEntries(
-    Object.entries(result.values).map(([key, value]) => [
+  // Convert values into provider configuration.
+  const flagConfiguration: FlagConfig = Object.fromEntries(
+    Object.entries(values).map(([key, value]) => [
       key,
       {
         variants: {
@@ -77,16 +82,19 @@ export async function initializeFeatureFlags(
         disabled: false,
       },
     ])
-  ) as FlagConfig;
-
+  );
   const provider = new TypedInMemoryProvider(
-    flagConfiguration as never
+    flagConfiguration
   );
 
+  // Register provider.
   await OpenFeature.setProviderAndWait(
     DEFAULT_DOMAIN,
     provider
   );
 
+  console.log("Registered feature flags:", values);
+
+  // Return initialized client.
   return OpenFeature.getClient(DEFAULT_DOMAIN);
 }

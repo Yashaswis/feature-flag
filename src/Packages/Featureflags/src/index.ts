@@ -13,8 +13,8 @@ export {
 } from "./components/FeatureFlagProvider";
 
 export {
-  useFeatureFlag,
-} from "./hooks/useFeatureFlag";
+  useFeatureFlagApi,
+} from "./hooks/useFeatureFlagApi";
 
 export type {
   FeatureFlagOptions,

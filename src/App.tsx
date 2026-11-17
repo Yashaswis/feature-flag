@@ -1,43 +1,101 @@
-import { useFeatureFlag, FeatureFlag } from "@company/feature-flags";
+
+import {
+  FeatureFlag,
+  useFeatureFlagApi,
+} from "@your-org/openfeatures";
 
 function App() {
-  const isEnabled = useFeatureFlag("new-dashboard", false);
+  // Evaluate all flags
+  const {
+    data: allFlags,
+    loading: allFlagsLoading,
+    error: allFlagsError,
+  } = useFeatureFlagApi({
+    endpoint: "YOUR_BACKEND_BASE_URL",
+    apiKey: "YOUR_API_KEY",
+    environment: "dev",
+    subjectId: "user-123",
+  });
 
-  const buttonColor = useFeatureFlag("button-color", "blue");
-
-  const pageSize = useFeatureFlag("page-size", 20);
-
-  const dashboardConfig = useFeatureFlag("dashboard-config", {
-    theme: "dark",
-    showReports: true,
-    permissions: {
-      canEdit: true,
-      canDelete: false,
-    },
+  // Evaluate a specific flag
+  const {
+    data: dashboardFlag,
+    loading: dashboardLoading,
+    error: dashboardError,
+  } = useFeatureFlagApi({
+    endpoint: "YOUR_BACKEND_BASE_URL",
+    apiKey: "YOUR_API_KEY",
+    environment: "dev",
+    subjectId: "user-123",
+    flagKey: "new-dashboard",
   });
 
   return (
-    <div>
-      <h2>Boolean Flag</h2>
-      <p>{isEnabled}? "flag is isEnabled":"Flag is disabled"</p>
+    <div style={{ padding: "24px", fontFamily: "Arial" }}>
+      <h2>Feature Flags Demo</h2>
 
-      <h2>String Flag</h2>
-      <p>{buttonColor}</p>
+      {/* FeatureFlag Example 1: With fallback */}
+      <h3>1. FeatureFlag with Fallback</h3>
 
-      <h2>Number Flag</h2>
-      <p>{pageSize}</p>
+      <FeatureFlag
+        flagKey="new-dashboard"
+        defaultValue={false}
+        fallback={<p>New dashboard is currently unavailable.</p>}
+      >
+        <h4>New Dashboard</h4>
+        <p>This is the new dashboard content.</p>
+      </FeatureFlag>
 
-      <h2>JSON Flag</h2>
-      <pre>{JSON.stringify(dashboardConfig, null, 2)}</pre>
+      <hr />
+
+      {/* FeatureFlag Example 2: Without fallback */}
+      <h3>2. FeatureFlag without Fallback</h3>
 
       <FeatureFlag
         flagKey="show-loan-products"
         defaultValue={false}
-        fallback={<p>Loan products unavailable</p>}
       >
-        <p> Loan products are available</p>
-        {/* <LoanProducts /> */}
+        <h4>Loan Products</h4>
+        <p>Explore our available loan products.</p>
       </FeatureFlag>
+
+      <hr />
+
+      {/* FeatureFlag Example 3: With explicit matchValue */}
+      <h3>3. FeatureFlag with matchValue</h3>
+
+      <FeatureFlag
+        flagKey="enable-payment"
+        defaultValue={false}
+        matchValue={true}
+        fallback={<p>Payment feature is disabled.</p>}
+      >
+        <button>Make Payment</button>
+      </FeatureFlag>
+
+      <hr />
+
+      {/* Evaluate all flags */}
+      <h3>4. Evaluate All Flags Using Hook</h3>
+
+      {allFlagsLoading && <p>Loading all flags...</p>}
+      {allFlagsError && <p>Error: {allFlagsError}</p>}
+
+      {allFlags && (
+        <pre>{JSON.stringify(allFlags, null, 2)}</pre>
+      )}
+
+      <hr />
+
+      {/* API Hook Example 2: Evaluate one flag */}
+      <h3>5. Evaluate Specific Flag Using Hook</h3>
+
+      {dashboardLoading && <p>Loading dashboard flag...</p>}
+      {dashboardError && <p>Error: {dashboardError}</p>}
+
+      {dashboardFlag && (
+        <pre>{JSON.stringify(dashboardFlag, null, 2)}</pre>
+      )}
     </div>
   );
 }

@@ -1,47 +1,27 @@
 
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-
+import React from "react";
+import ReactDOM from "react-dom/client";
 import {
-  TypedInMemoryProvider,
-} from "@openfeature/react-sdk";
-
-import { FeatureFlagProvider, initializeFeatureFlags } from
-  "@company/feature-flags";
-
+  initializeFeatureFlags,
+  FeatureFlagProvider,
+} from "@your-org/openfeatures";
 import App from "./App";
-import "./index.css";
-
-const localProvider = new TypedInMemoryProvider({
-  "new-dashboard": {
-    disabled: false,
-    variants: {
-      on: true,
-      off: false,
-    },
-    defaultVariant: "on",
-  },
-  "show-loan-products":{
-    disabled: false,
-    variants: {
-      on: false,
-      off: true,
-    },
-    defaultVariant: "on",
-  }
-});
 
 async function bootstrap() {
   await initializeFeatureFlags({
-    provider: localProvider,
+    apiKey: "YOUR_API_KEY",
+    environment: "dev",
+    subjectId: "user-123",
   });
 
-  createRoot(document.getElementById("root")!).render(
-    <StrictMode>
+  ReactDOM.createRoot(
+    document.getElementById("root")!
+  ).render(
+    <React.StrictMode>
       <FeatureFlagProvider>
         <App />
       </FeatureFlagProvider>
-    </StrictMode>
+    </React.StrictMode>
   );
 }
 
